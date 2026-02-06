@@ -1,0 +1,41 @@
+name: medallion_bq
+version: "1.0.0"
+config-version: 2
+
+profile: medallion_bq
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+snapshot-paths: ["snapshots"]
+analysis-paths: ["analysis"]
+
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+require-dbt-version: [">=1.7.0", "<2.0.0"]
+
+models:
+  medallion_bq:
+
+    # SOURCES (no materialization here; just yml)
+    sources:
+      +tags: ["sources"]
+
+    # SILVER
+    staging:
+      +schema: "silver"
+      +materialized: view
+      +tags: ["silver"]
+
+    # GOLD
+    analytics:
+      +schema: "gold"
+      +materialized: table
+      +tags: ["gold"]
+
+vars:
+  timezone: "UTC"
+
+dispatch: []

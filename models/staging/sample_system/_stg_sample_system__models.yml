@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: stg_sample_system__customers
+    description: >
+      Cleaned and standardized customer records from the sample system (Silver layer).
+      All fields are cast/trimmed via standard macros — no ad-hoc transformations.
+    columns:
+      - name: customer_id
+        description: Natural key — unique customer identifier, cast to trimmed string.
+        tests:
+          - not_null
+          - unique
+      - name: customer_name
+        description: Trimmed customer full name.
+      - name: email
+        description: Lowercased, trimmed email address.
+      - name: is_active
+        description: Boolean flag parsed from multilingual source values.
+      - name: created_at
+        description: Source creation timestamp.
+      - name: updated_at
+        description: Source last-update timestamp.
