@@ -19,21 +19,19 @@ require-dbt-version: [">=1.7.0", "<2.0.0"]
 models:
   medallion_bq:
 
-    # SOURCES (no materialization here; just yml)
     sources:
       +tags: ["sources"]
 
-    # SILVER
     staging:
-      +schema: "silver"
+      +schema: "staging"
       +materialized: view
-      +tags: ["silver"]
+      +tags: ["staging", "bi"]
 
-    # GOLD
     analytics:
-      +schema: "gold"
+      +schema: "analytics"
       +materialized: table
-      +tags: ["gold"]
+      +tags: ["analytics", "bi"]
+
 
 vars:
   timezone: "UTC"
