@@ -1,0 +1,88 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: >
+      Customer dimension table for analytics (Gold layer).
+      Contains all customer attributes for business intelligence and reporting.
+      This is a direct reference to the staging layer customers.
+    columns:
+      - name: id
+        description: "Surrogate key for customer"
+        data_type: string
+        tests:
+          - not_null
+          - unique
+      - name: nk
+        description: "Natural key for customer (original customer_id)"
+        data_type: string
+        tests:
+          - not_null
+      - name: name
+        description: "Customer name"
+        data_type: string
+      - name: email
+        description: "Customer email address"
+        data_type: string
+        tests:
+          - not_null
+      - name: _source_file_name
+        description: "Source file name from ingestion"
+        data_type: string
+      - name: _ingestion_id
+        description: "Surrogate key for ingestion batch"
+        data_type: string
+      - name: _ingestion_nk
+        description: "Natural key for ingestion batch"
+        data_type: string
+      - name: _ingested_at_brt
+        description: "Timestamp when record was ingested (Brazilian Time)"
+        data_type: timestamp
+
+  - name: fct_transactions
+    description: >
+      Transaction fact table for analytics (Gold layer).
+      Contains all transaction events with associated details (type, quantity, price).
+      Joins transactions with transaction details and deduplicates to keep latest version.
+      Ready for business intelligence and reporting purposes.
+    columns:
+      - name: transaction_id
+        description: "Composite surrogate key for unique transaction record"
+        data_type: string
+        tests:
+          - not_null
+          - unique
+      - name: transaction_nk
+        description: "Natural key for transaction (original transaction_id)"
+        data_type: string
+        tests:
+          - not_null
+      - name: customer_id
+        description: "Surrogate key for customer (foreign key to dim_customers)"
+        data_type: string
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customers')
+              field: id
+              severity: warn
+      - name: customer_nk
+        description: "Natural key for customer (original customer_id)"
+        data_type: string
+      - name: status
+        description: "Transaction status"
+        data_type: string
+      - name: transaction_date_brt
+        description: "Transaction date in Brazilian Time"
+        data_type: timestamp
+        tests:
+          - not_null
+      - name: transaction_type
+        description: "Type of transaction"
+        data_type: string
+      - name: quantity
+        description: "Transaction quantity"
+        data_type: numeric
+      - name: price_usd
+        description: "Transaction price in USD"
+        data_type: numeric
