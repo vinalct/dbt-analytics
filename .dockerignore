@@ -6,7 +6,6 @@
 target/
 dbt_packages/
 logs/
-package-lock.yml
 
 # Local dev files
 .python-version
