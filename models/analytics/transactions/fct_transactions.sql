@@ -39,7 +39,7 @@ fact_table as (
     left join 
         transactions_details
     on 
-        transactions.id = transactions_details.id
+        transactions.transaction_id = transactions_details.id
 ),
 
 dedup as (
