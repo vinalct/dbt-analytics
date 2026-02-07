@@ -1,0 +1,19 @@
+version: 2
+
+sources:
+  - name: raw_ingestion__tables
+    description: >
+      Raw data ingested from the sample source system.
+      Tables land in the raw_data dataset and are consumed by staging models.
+    database: lct-raw-data-analytics
+    schema: raw_data
+    tags: ["sources"]
+
+    tables:
+      - name: customers
+        description: Raw customer records from the sample.
+      - name: transactions
+        description: Raw transaction records from the sample.
+      - name: transactions_details
+        description: Raw transaction detail records from the sample.
+        
