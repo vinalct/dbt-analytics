@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: stg_ingestion__customers
+    description: >
+      Cleaned and standardized customer records from the sample system (Silver layer).
+      All fields are cast/trimmed via standard macros — no ad-hoc transformations.
+    columns:
+      - name: customer_id
+        description: "Surrogate key for customer"
+        data_type: string
+        tests:
+          - not_null
+          - unique
+      - name: customer_nk
+        description: "Natural key for customer (original customer_id)"
+        data_type: string
+        tests:
+          - not_null
+      - name: customer_name
+        description: "Customer name"
+        data_type: string
+      - name: email
+        description: "Customer email address"
+        data_type: string
+        tests:
+          - not_null
+      - name: source_file_name
+        description: "Source file name from ingestion"
+        data_type: string
+      - name: ingestion_id
+        description: "Surrogate key for ingestion batch"
+        data_type: string
+      - name: ingestion_nk
+        description: "Natural key for ingestion batch"
+        data_type: string
+      - name: ingested_at
+        description: "Timestamp when record was ingested"
+        data_type: timestamp
