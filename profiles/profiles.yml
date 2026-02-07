@@ -1,0 +1,12 @@
+medallion_bq:
+  target: "{{ env_var('DBT_TARGET', 'prod') }}"
+  outputs:
+    prod:
+      type: bigquery
+      method: oauth
+      project: "{{ env_var('DBT_BQ_PROJECT') }}"
+      dataset: "{{ env_var('DBT_BQ_DATASET', 'silver_prod') }}"
+      location: "{{ env_var('DBT_BQ_LOCATION', 'US') }}"
+      threads: 8
+      priority: interactive
+      job_execution_timeout_seconds: 300

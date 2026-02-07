@@ -1,0 +1,30 @@
+# Git
+.git/
+.gitignore
+
+# dbt artifacts (rebuilt inside container)
+target/
+dbt_packages/
+logs/
+package-lock.yml
+
+# Local dev files
+.python-version
+local_setup.sh
+profiles.yml.example
+requirements.txt
+Makefile
+PDL.md
+TASKS.md
+README.md
+
+# Docker
+Dockerfile
+.dockerignore
+
+# IDE / OS
+.vscode/
+.idea/
+*.pyc
+__pycache__/
+.DS_Store
